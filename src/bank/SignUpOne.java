@@ -2,6 +2,8 @@ package bank;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -9,20 +11,26 @@ import java.beans.PropertyChangeListener;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
-public class SignUpOne extends JFrame {
+public class SignUpOne extends JFrame implements ActionListener {
+
+long random;
+ButtonGroup genderButtonGroup , marriageGroupButton ;
 
 JLabel formno , Name , address , phoneNum , fatherName , page1 , gender , email , marry , dob , city , state , pin ;
 JTextField namefield , addressfield , phonefield , fatherfield , dobfield ,
-        genderfield , emailfield , maritalfield , cityfield , statefield , pinfield;
+        genderfield , emailfield , maritalfield , cityfield , statefield , pinfield ;
 
 JRadioButton male , female , single , married , other ;
+JDateChooser dateChooser;
+
+JButton next;
 
     SignUpOne() {
     setTitle("SIGN UP");
     setLayout(null);
 
     Random ran = new Random();
-    long random = Math.abs((ran.nextLong() % 9000L) + 1000L);
+    random = Math.abs((ran.nextLong() % 9000L) + 1000L);
 
     formno = new JLabel("Application Form No : " + random );
     formno.setBounds(200 , 10 , 600 , 70);
@@ -39,7 +47,7 @@ JRadioButton male , female , single , married , other ;
     Name.setFont(new Font("Raleway" , Font.ITALIC , 18));
     add(Name);
 
-     namefield= new JTextField();
+    namefield= new JTextField();
     namefield.setBounds(350 , 200 , 300 , 30);
     namefield.setFont(new Font("Ariel" , Font.BOLD , 18));
     namefield.setForeground(Color.BLACK);
@@ -97,6 +105,11 @@ JRadioButton male , female , single , married , other ;
     other.setBounds(530 , 320 , 80 , 30);
     add(other);
 
+    genderButtonGroup = new ButtonGroup();
+    genderButtonGroup.add(male);
+    genderButtonGroup.add(female);
+    genderButtonGroup.add(other);
+
 //    genderfield = new JTextField();
 //    genderfield.setBounds(350 , 200 , 300 , 30);
 //    genderfield.setFont(new Font("Ariel" , Font.BOLD , 18));
@@ -126,6 +139,10 @@ JRadioButton male , female , single , married , other ;
     married = new JRadioButton("Married");
     married.setBounds(530 , 560 , 80 , 30);
     add(married);
+
+    marriageGroupButton = new ButtonGroup();
+    marriageGroupButton.add(single);
+    marriageGroupButton.add(married);
 
     address= new JLabel("Address : " );
     address.setBounds(170 , 400 , 150 , 30);
@@ -171,12 +188,60 @@ JRadioButton male , female , single , married , other ;
     pinfield.setForeground(Color.BLACK);
     add(pinfield);
 
+    next = new JButton("Next");
+    next.setBounds(550 , 650 , 100 , 30);
+    next.setBackground(Color.white);
+    next.setForeground(Color.black);
+    next.addActionListener(this);
+    add(next);
+
     getContentPane().setBackground(Color.LIGHT_GRAY);
     setSize(850 , 800);
     setVisible(true);
     setLocation(300 , 100);
     }
-    public static void main(String[] args) {
+
+    public void actionPerformed (ActionEvent ae){
+        String formno = "" + random;
+        String Name = namefield.getText();
+        String fatherName = fatherfield.getText();
+        String dob = ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText();
+        String gender = null;
+        if(male.isSelected()){
+            gender = "MALE";
+        } else if (female.isSelected()){
+            gender = "FEMALE";
+        } else if (other.isSelected()) {
+            gender = "OTHER";
+        }
+
+        String email = emailfield.getText();
+
+        String marital = null;
+        if (single.isSelected()){
+            marital = "SINGLE";
+        } else if (married.isSelected()) {
+            marital = "MARRIED";
+        }
+
+        String address = addressfield.getText();
+        String pin = pinfield.getText();
+        String state = statefield.getText();
+        String phone = "" + phonefield.getText();
+
+        try {
+            if(namefield.equals("")) {
+                JOptionPane.showMessageDialog(null , "Name is required !");
+            } else if (fatherName.equals("")) {
+                JOptionPane.showMessageDialog(null , "Name is required !" );
+            }
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+    }
+    public static void main(String[] args)  {
         new SignUpOne();
     }
+
 }
