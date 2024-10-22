@@ -194,7 +194,32 @@ public class SignUpOne extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Name is required!");
             } else if (fatherName.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Father's Name is required!");
-            } else {
+            } else if (dob.isEmpty() || dateChooser.getDate() == null) {
+    JOptionPane.showMessageDialog(null, "Date of Birth is required!");
+}
+            else if (!male.isSelected() && !female.isSelected() && !other.isSelected()) {
+                JOptionPane.showMessageDialog(null, "Gender is required!");
+            }
+            else if (email.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Email is required!");
+            }
+            else if (!single.isSelected() && !married.isSelected()) {
+    JOptionPane.showMessageDialog(null, "Marital status is required!");
+}
+            else if (address.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Address is required!");
+            }
+            else if (city.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "City is required!");
+            }
+            else if (state.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "State is required!");
+            }
+            else if (pin.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Date of Birth is required!");
+            }
+
+            else {
                 conn c = new conn();
                 String query = "INSERT INTO signup (formno, Name, address, Father_name, gender, email, marital_status, state, dob, city, pin) VALUES ('" +
                         formNo + "', '" + name + "', '" + address + "', '" + fatherName + "', '" + gender + "', '" + email + "', '" +
